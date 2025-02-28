@@ -8,8 +8,12 @@ on:
       # contexts without triggering pull-requests.
       - chore/cicd/*
       - ogdf_submodule
+      - release_wheels
   pull_request:
   workflow_dispatch:
+
+permissions:
+  contents: write
 
 jobs:
   generate-wheels-matrix:
@@ -94,3 +98,11 @@ jobs:
           name: wheelhouse
           path: |
             wheelhouse/*.whl
+      
+      - name: Release
+        uses: softprops/action-gh-release@v2
+        if: startsWith(github.ref, 'refs/tags/')
+        with:
+          files: wheelhouse/*.whl
+          generate_release_notes: true
+          prerelease: true
