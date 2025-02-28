@@ -9,6 +9,8 @@ on:
       - chore/cicd/*
       - ogdf_submodule
       - release_wheels
+    tags:
+      - "v*"
   pull_request:
   workflow_dispatch:
 
